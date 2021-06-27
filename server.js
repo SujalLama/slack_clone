@@ -10,7 +10,7 @@ const { loadFilesSync } = require('@graphql-tools/load-files');
 
 const typeDefs = mergeTypeDefs(loadFilesSync(path.join(__dirname, './schema')));
 const resolvers = mergeResolvers(loadFilesSync(path.join(__dirname, './resolvers')));
-
+const cors = require('cors');
 
 async function startApolloServer() {
   const app = express();
@@ -26,6 +26,7 @@ async function startApolloServer() {
   });
   await server.start();
 
+  app.use(cors('*'));
   server.applyMiddleware({ app });
 
   try {
