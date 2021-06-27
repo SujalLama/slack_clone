@@ -1,14 +1,28 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
-const { typeDefs, resolvers } = require('./schema');
+// const typeDefs = require('./schema/hi');
+// const resolvers = require('./resolvers/hi');
 require('dotenv').config();
+const path = require('path');
 const db = require('./models')
+const { mergeTypeDefs, mergeResolvers } = require('@graphql-tools/merge');
+const { loadFilesSync } = require('@graphql-tools/load-files');
+
+const typeDefs = mergeTypeDefs(loadFilesSync(path.join(__dirname, './schema')));
+const resolvers = mergeResolvers(loadFilesSync(path.join(__dirname, './resolvers')));
+
 
 async function startApolloServer() {
   const app = express();
   const server = new ApolloServer({
     typeDefs,
     resolvers,
+    context: {
+      db,
+      user: {
+        id: 1
+      }
+    }
   });
   await server.start();
 

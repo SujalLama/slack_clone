@@ -6,7 +6,6 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
-const db = {};
 
 // let sequelize = new Sequelize(process.env.DATABASE, process.env.USERNAME, process.env.PASSWORD, {
 //   host: process.env.HOST,
@@ -28,6 +27,13 @@ if (config.use_env_variable) {
 //     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
 //     db[model.name] = model;
 //   });
+
+const db = {
+  User: require('./user')(sequelize, Sequelize.DataTypes),
+  Channel: require('./channel')(sequelize, Sequelize.DataTypes),
+  Message: require('./message')(sequelize, Sequelize.DataTypes),
+  Team: require('./team')(sequelize, Sequelize.DataTypes),
+}
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
