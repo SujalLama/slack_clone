@@ -13,6 +13,6 @@ module.exports = gql`
     }
 
    type Mutation {
-        postUser(username: String!, email: String!, password: String!): User!
+        register(username: String!, email: String!, password: String!): Boolean!
     }
 `
