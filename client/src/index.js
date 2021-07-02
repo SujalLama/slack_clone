@@ -11,6 +11,7 @@ import {
   gql,
   HttpLink
 } from "@apollo/client";
+import 'semantic-ui-css/semantic.min.css'
 
 // const link = from({
 //   errorLink,
